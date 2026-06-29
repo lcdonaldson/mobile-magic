@@ -23,3 +23,4 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ### Notes
 - This is a pre-1.0 release. API adjustments are expected as the library is validated in production apps.
+- Initial public release used to secure the `mobile-magic` package name on npm before full 1.0 launch assets and rollout.
