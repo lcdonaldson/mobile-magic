@@ -1,0 +1,49 @@
+{
+  "name": "mobile-magic",
+  "version": "0.1.0",
+  "description": "A token-driven React Native design system with pre-built components, automatic dark mode, and cross-platform consistency.",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --out-dir dist",
+    "pack:local": "npm run build && npm pack",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0"
+  },
+  "devDependencies": {
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "tsup": "^8.5.1",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "design-system",
+    "tokens",
+    "theming",
+    "dark-mode"
+  ],
+  "author": "fireflytechlabs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcdonaldson/mobile-magic.git"
+  },
+  "homepage": "https://github.com/lcdonaldson/mobile-magic#readme",
+  "bugs": {
+    "url": "https://github.com/lcdonaldson/mobile-magic/issues"
+  },
+  "license": "MIT"
+}

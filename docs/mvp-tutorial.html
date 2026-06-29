@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Magic MVP Tutorial</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a31;
+        --panel-2: #1a2442;
+        --text: #e8ecf9;
+        --muted: #9aa4c7;
+        --accent: #7c7fff;
+        --ok: #4ade80;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+      }
+      h1, h2, h3 { margin: 0 0 10px; }
+      h1 { font-size: 32px; }
+      h2 { margin-top: 30px; font-size: 24px; }
+      h3 { margin-top: 18px; font-size: 18px; color: var(--accent); }
+      p, li { color: var(--muted); }
+      .card {
+        background: var(--panel);
+        border: 1px solid #283457;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 14px;
+      }
+      .checkpoint {
+        border-left: 3px solid var(--ok);
+        padding: 10px 12px;
+        background: rgba(74, 222, 128, 0.08);
+        margin: 10px 0 0;
+        color: #c9f8dd;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        background: var(--panel-2);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      pre {
+        margin: 10px 0 0;
+        padding: 14px;
+        border-radius: 10px;
+        overflow: auto;
+        background: #0f1730;
+        border: 1px solid #2a365d;
+      }
+      pre code {
+        padding: 0;
+        background: transparent;
+      }
+      .pill {
+        display: inline-block;
+        background: #1f2a4b;
+        color: #c8d2f4;
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        font-size: 13px;
+      }
+      .warn {
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: #fde68a;
+      }
+      a { color: #9db4ff; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Mobile Magic MVP Tutorial</h1>
+      <p>
+        This is a browser-style walkthrough to get from <strong>zero</strong> to a full
+        styled screen in a simulator using <code>mobile-magic</code>.
+      </p>
+      <div>
+        <span class="pill">MagicProvider</span>
+        <span class="pill">useTheme</span>
+        <span class="pill">tokens</span>
+        <span class="pill">10 components</span>
+      </div>
+
+      <div class="card warn">
+        Use this with an Expo app running in simulator. Keep this page open in your browser while you code.
+      </div>
+
+      <h2>Step 0 — Create and run a demo app</h2>
+      <div class="card">
+        <h3>Use a packed local install (important)</h3>
+        <p>
+          For Expo 56 + local package testing, install from a tarball instead of a direct
+          <code>file:</code> link. This avoids duplicate React resolution and hook-call errors.
+        </p>
+        <pre><code>cd /absolute/path/to/Mobile_Magic
+npm run build
+npm pack
+
+npx create-expo-app mobile-magic-demo
+cd /absolute/path/to/mobile-magic-demo
+npm install ../Mobile_Magic/mobile-magic-0.1.0.tgz
+npx expo start</code></pre>
+        <div class="checkpoint">
+          Checkpoint: simulator opens the Expo starter app.
+        </div>
+      </div>
+
+      <div class="card warn">
+        If you install with <code>file:../Mobile_Magic</code>, Metro can resolve React from
+        both the app and the library workspace, causing:
+        <code>Invalid hook call</code> at <code>MagicProvider</code>. Use the tarball method above.
+      </div>
+
+      <h2>Step 1 — Wire Provider + Screen (Expo Router / SDK 56)</h2>
+      <p>
+        Expo SDK 56 projects commonly use <code>src/app/</code> + <code>_layout.tsx</code>,
+        not a top-level <code>App.tsx</code>. Do these two edits:
+      </p>
+      <div class="card">
+        <h3>1A) Update <code>src/app/_layout.tsx</code></h3>
+        <pre><code>import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { useColorScheme } from 'react-native';
+import { MagicProvider } from 'mobile-magic';
+
+import { AnimatedSplashOverlay } from '@/components/animated-icon';
+import AppTabs from '@/components/app-tabs';
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+  return (
+    &lt;MagicProvider&gt;
+      &lt;ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}&gt;
+        &lt;AnimatedSplashOverlay /&gt;
+        &lt;AppTabs /&gt;
+      &lt;/ThemeProvider&gt;
+    &lt;/MagicProvider&gt;
+  );
+}</code></pre>
+
+        <h3>1B) Replace <code>src/app/index.tsx</code></h3>
+        <pre><code>import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Checkbox,
+  Field,
+  ListRow,
+  ProgressBar,
+  Switch,
+  Type,
+  spacing,
+  useTheme,
+  shadows,
+} from 'mobile-magic';
+
+function DemoScreen() {
+  const theme = useTheme();
+  const [name, setName] = useState('Levi Donaldson');
+  const [email, setEmail] = useState('levi@example.com');
+  const [notifications, setNotifications] = useState(true);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [progress, setProgress] = useState(0.42);
+
+  return (
+    &lt;ScrollView
+      contentContainerStyle={[
+        styles.container,
+        { backgroundColor: theme.bg },
+      ]}
+    &gt;
+      {/* Header */}
+      &lt;View style={styles.header}&gt;
+        &lt;Avatar name={name} size="lg" skin="info" /&gt;
+        &lt;View style={{ flex: 1, gap: spacing.xs }}&gt;
+          &lt;Type scale="h2"&gt;Profile Setup&lt;/Type&gt;
+          &lt;Type muted&gt;Build a complete styled screen with Mobile Magic&lt;/Type&gt;
+        &lt;/View&gt;
+        &lt;Badge skin="success"&gt;MVP&lt;/Badge&gt;
+      &lt;/View&gt;
+
+      {/* Progress */}
+      &lt;Card skin="surface" style={styles.card}&gt;
+        &lt;Type scale="label" muted&gt;Completion&lt;/Type&gt;
+        &lt;Type scale="h3"&gt;{Math.round(progress * 100)}%&lt;/Type&gt;
+        &lt;ProgressBar value={progress} skin="primary" style={{ marginTop: spacing.sm }} /&gt;
+      &lt;/Card&gt;
+
+      {/* Form */}
+      &lt;Card style={styles.card}&gt;
+        &lt;Type scale="h3"&gt;Account Details&lt;/Type&gt;
+        &lt;View style={styles.stack}&gt;
+          &lt;Field
+            label="Full Name"
+            value={name}
+            onChangeText={setName}
+            placeholder="Your name"
+          /&gt;
+          &lt;Field
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            placeholder="you@example.com"
+          /&gt;
+          &lt;Checkbox
+            checked={termsAccepted}
+            onCheckedChange={setTermsAccepted}
+          &gt;
+            I accept the terms and privacy policy
+          &lt;/Checkbox&gt;
+        &lt;/View&gt;
+      &lt;/Card&gt;
+
+      {/* Settings rows */}
+      &lt;View style={styles.stack}&gt;
+        &lt;ListRow
+          label="Notifications"
+          sublabel="Push alerts for account activity"
+          leading={&lt;Badge skin="info"&gt;N&lt;/Badge&gt;}
+          trailing={
+            &lt;Switch
+              value={notifications}
+              onValueChange={setNotifications}
+              skin="success"
+            /&gt;
+          }
+        /&gt;
+
+        &lt;ListRow
+          label="Theme"
+          sublabel="Follows system dark mode automatically"
+          leading={&lt;Badge skin="secondary"&gt;Auto&lt;/Badge&gt;}
+          trailing={&lt;Badge skin="primary"&gt;System&lt;/Badge&gt;}
+        /&gt;
+      &lt;/View&gt;
+
+      {/* Actions */}
+      &lt;View style={styles.actions}&gt;
+        &lt;Button skin="secondary" onPress={() =&gt; setProgress(0.1)}&gt;
+          Reset
+        &lt;/Button&gt;
+        &lt;Button
+          skin="primary"
+          onPress={() =&gt; setProgress((p) =&gt; Math.min(1, p + 0.15))}
+        &gt;
+          Continue
+        &lt;/Button&gt;
+      &lt;/View&gt;
+
+      &lt;Button
+        skin="danger"
+        disabled={!termsAccepted}
+        onPress={() =&gt; {}}
+      &gt;
+        Complete Setup
+      &lt;/Button&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+export default function HomeScreen() {
+  return &lt;DemoScreen /&gt;;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: spacing.lg,
+    gap: spacing.md,
+    minHeight: '100%',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  card: {
+    gap: spacing.sm,
+    ...shadows.sm,
+  },
+  stack: {
+    gap: spacing.sm,
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+});</code></pre>
+        <div class="checkpoint">
+          Checkpoint: saving both files should render the new screen in simulator.
+        </div>
+      </div>
+
+      <h2>Step 2 — Verify in simulator</h2>
+      <div class="card">
+        <h3>You should now see:</h3>
+        <ul>
+          <li>A header with avatar, title/subtitle, and a status badge</li>
+          <li>A progress card with animated linear progress</li>
+          <li>Form fields + checkbox agreement row</li>
+          <li>Two list rows with leading/trailing slots</li>
+          <li>Primary/secondary/danger buttons</li>
+          <li>Dark mode switching automatically with device theme</li>
+        </ul>
+        <div class="checkpoint">
+          Checkpoint: if this renders correctly, you now understand the core usage model.
+        </div>
+      </div>
+
+      <h2>Step 3 — Understand the pattern you just used</h2>
+      <div class="card">
+        <ul>
+          <li><code>MagicProvider</code> is mounted once at app root.</li>
+          <li><code>useTheme()</code> gives ambient colors for custom layout code.</li>
+          <li>Components use <code>skin</code> for color identity.</li>
+          <li>Tokens (<code>spacing</code>, <code>radii</code>, <code>type</code>, <code>shadows</code>) control structure, not theme colors.</li>
+        </ul>
+      </div>
+
+      <h2>Step 4 — Next practical tweaks</h2>
+      <div class="card">
+        <ul>
+          <li>Swap button skins and see global tone changes.</li>
+          <li>Try custom raw skin object on one component.</li>
+          <li>Force mode with <code>&lt;MagicProvider mode="dark"&gt;</code> for testing.</li>
+          <li>Duplicate the screen to create a second route with same system patterns.</li>
+        </ul>
+      </div>
+
+      <h2>Optional: Serve this page locally</h2>
+      <div class="card">
+        <p>
+          You can open this file directly, or serve docs and view in browser:
+        </p>
+        <pre><code>cd /absolute/path/to/Mobile_Magic/docs
+python3 -m http.server 4173</code></pre>
+        <p>Then open <a href="http://localhost:4173/mvp-tutorial.html">http://localhost:4173/mvp-tutorial.html</a></p>
+      </div>
+    </div>
+  </body>
+</html>

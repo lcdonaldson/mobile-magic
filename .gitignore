@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.DS_Store
+*.tgz
+mvp-tutorial.hml
+Premium_Pathway.md
+.cursorrules
+BEFORE_LAUNCH.md
+CURRENT.md
