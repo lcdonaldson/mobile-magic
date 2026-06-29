@@ -2,6 +2,10 @@
 
 A skin-and-token system for React Native. Dark mode, swappable color palettes, and eleven components that cover core app primitives. Everything else, you build with native `View`, `Text`, `Pressable` — using our tokens and theme.
 
+## Pre-1.0 Notice
+
+`mobile-magic` is currently `0.1.0` and pre-stable. APIs may change as real app usage drives refinement.
+
 ## Install
 
 ```
