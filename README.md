@@ -4,7 +4,7 @@ A skin-and-token system for React Native. Dark mode, swappable color palettes, a
 
 ## Pre-1.0 Notice
 
-`mobile-magic` is currently `0.1.0` and pre-stable. APIs may change as real app usage drives refinement.
+`mobile-magic` is currently `0.0.1` and pre-stable. APIs may change as real app usage drives refinement.
 
 ## Install
 
