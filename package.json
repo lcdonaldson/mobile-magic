@@ -1,6 +1,6 @@
 {
   "name": "mobile-magic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A token-driven React Native design system with pre-built components, automatic dark mode, and cross-platform consistency.",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",

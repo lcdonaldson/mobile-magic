@@ -24,3 +24,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Notes
 - This is a pre-1.0 release. API adjustments are expected as the library is validated in production apps.
 - Initial public release used to secure the `mobile-magic` package name on npm before full 1.0 launch assets and rollout.
+
+## [0.0.2] - 2026-06-29
+
+### Fixed
+- Switch thumb animation now runs in web environments using the custom switch renderer.
+- iOS switch interaction reliability improved by handling both native change callbacks.
+
+### Changed
+- Added a publish reminder in README to run final npm publish manually in the owner terminal (biometric/2FA flow).
