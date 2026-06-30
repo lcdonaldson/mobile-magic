@@ -441,6 +441,18 @@ These tarballs are local validation artifacts only and should not be committed (
 
 ---
 
+## Publish Reminder
+
+Run final npm publish manually from your own terminal session:
+
+```bash
+npm publish --access public
+```
+
+This account uses biometric/2FA approval (fingerprint flow), so automated publish attempts from agents may fail with OTP/approval prompts.
+
+---
+
 ## Where This Stands
 
 mobile-magic v0.1 is an architecture, not a finished product. These are the questions every future iteration must answer:

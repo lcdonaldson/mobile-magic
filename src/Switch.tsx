@@ -41,7 +41,8 @@ export function Switch({
   const thumbTranslate = useRef(new Animated.Value(value ? THUMB_TRANSLATE_X : 0)).current;
 
   useEffect(() => {
-    if (Platform.OS !== 'android') {
+    // We render the custom switch on Android + web.
+    if (Platform.OS === 'ios') {
       return;
     }
 
@@ -68,6 +69,7 @@ export function Switch({
           disabled={disabled}
           value={value}
           onValueChange={setValue}
+          onChange={(event) => setValue(event.nativeEvent.value)}
           trackColor={{ false: theme.border, true: skin.bg }}
           thumbColor={value ? skin.fg : theme.bg}
           ios_backgroundColor={theme.border}
