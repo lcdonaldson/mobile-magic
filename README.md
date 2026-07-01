@@ -85,6 +85,29 @@ What this changes in usage:
 - The meaning of those skin names now comes from your `createTheme(...)` output.
 - You only override what you pass; everything else inherits from the base light/dark theme.
 
+### Add Your Own Skin Names (`extend`)
+
+You can also add brand-specific skin names (for example `brand`, `cta`, `confirm`) and use them exactly like built-in names.
+
+```tsx
+import { createTheme, light, Button, Badge } from 'mobile-magic';
+
+const theme = createTheme(light, {
+  extend: {
+    brand: { bg: '#FF6B35', fg: '#FFFFFF', border: '#FF6B35' },
+    cta: { bg: '#00B050', fg: '#FFFFFF', border: '#00B050' },
+  },
+});
+
+<Button skin="brand">Start Trial</Button>
+<Badge skin="cta">Live</Badge>
+```
+
+Notes:
+- `extend` entries are deep-merged with a base skin and always resolve to full `Skin` objects.
+- If you provide `bg` but omit `pressed`, `pressed` is auto-derived by darkening `bg`.
+- Unknown skin strings gracefully fall back to `surface` (no runtime crash).
+
 ---
 
 ## Customization Boundary
@@ -386,6 +409,8 @@ const brandOrange: Skin = {
 
 Built-in skins: `primary`, `secondary`, `danger`, `ghost`, `surface`, `success`, `warning`, `info`. Pass them as strings — they resolve from the active theme.
 
+You can also define additional string skin names through `createTheme(..., { extend: { ... } })`.
+
 Any component that accepts `skin` works with any skin (built-in or custom). That's the whole point.
 
 ---
@@ -432,6 +457,7 @@ function MyCustomThing() {
 The theme object has:
 - `bg`, `text`, `textMuted`, `border` — ambient colors
 - `primary`, `secondary`, `danger`, `ghost`, `surface`, `success`, `warning`, `info` — named `Skin` objects
+- `custom` — optional map of additional named skins added via `createTheme(..., { extend })`
 
 ---
 
