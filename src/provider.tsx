@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { light, dark } from './skins';
-import type { Theme, Skin, SkinProp, SkinName } from './skins';
+import type { Theme, Skin, SkinProp } from './skins';
 
 // =============================================================================
 // Context
@@ -54,12 +54,21 @@ export function useTheme(): Theme {
 // Skin resolution — used internally by components
 // =============================================================================
 
-const SKIN_NAMES = new Set<string>(['primary', 'secondary', 'danger', 'ghost', 'surface', 'success', 'warning', 'info']);
-
 /** Resolve a SkinProp (string name or Skin object) against the active theme. */
 export function resolveSkin(prop: SkinProp, theme: Theme): Skin {
-  if (typeof prop === 'string' && SKIN_NAMES.has(prop)) {
-    return theme[prop as SkinName];
+  if (typeof prop !== 'string') {
+    return prop;
   }
-  return prop as Skin;
+
+  const builtIn = ((theme as unknown) as Record<string, unknown>)[prop] as Skin | undefined;
+  if (builtIn && typeof builtIn === 'object' && 'bg' in builtIn) {
+    return builtIn;
+  }
+
+  const custom = theme.custom?.[prop];
+  if (custom) {
+    return custom;
+  }
+
+  return theme.surface;
 }

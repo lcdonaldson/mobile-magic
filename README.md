@@ -43,6 +43,48 @@ That's it. Light/dark mode follows the device automatically.
 <MagicProvider theme={{ fontFamily: 'Inter_400Regular' }}>
 ```
 
+### Brand Themes with `createTheme`
+
+Use `createTheme` when you want to keep the same skin system (`primary`, `success`, `danger`, etc.) but map those names to your own brand colors.
+
+```tsx
+import { MagicProvider, createTheme, light, dark } from 'mobile-magic';
+import { useColorScheme } from 'react-native';
+
+const brandedLight = createTheme(light, {
+  primary: { bg: '#0EA5E9' },      // pressed auto-derived if not provided
+  success: { bg: '#16A34A' },      // keeps base fg/border unless overridden
+  surface: { bg: '#F8FAFC' },
+  fontFamily: 'Inter_400Regular',
+});
+
+const brandedDark = createTheme(dark, {
+  primary: { bg: '#38BDF8' },
+  success: { bg: '#22C55E' },
+  surface: { bg: '#0F172A' },
+  text: '#E2E8F0',
+  border: '#334155',
+  fontFamily: 'Inter_400Regular',
+});
+
+export default function App() {
+  const scheme = useColorScheme();
+  const mode = scheme === 'dark' ? 'dark' : 'light';
+  const theme = mode === 'dark' ? brandedDark : brandedLight;
+
+  return (
+    <MagicProvider mode={mode} theme={theme}>
+      {/* your app */}
+    </MagicProvider>
+  );
+}
+```
+
+What this changes in usage:
+- You still write `skin="primary"` or `skin="success"` in components.
+- The meaning of those skin names now comes from your `createTheme(...)` output.
+- You only override what you pass; everything else inherits from the base light/dark theme.
+
 ---
 
 ## Customization Boundary

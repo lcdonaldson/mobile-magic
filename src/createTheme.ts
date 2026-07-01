@@ -6,6 +6,7 @@ export type ThemeOverrides = {
   textMuted?: string;
   border?: string;
   fontFamily?: string;
+  extend?: Record<string, Partial<Skin>>;
   primary?: Partial<Skin>;
   secondary?: Partial<Skin>;
   danger?: Partial<Skin>;
@@ -114,6 +115,16 @@ export function createTheme(base: Theme, overrides: ThemeOverrides): Theme {
 
   for (const key of SKIN_KEYS) {
     merged[key] = mergeSkin(base[key], overrides[key]);
+  }
+
+  const baseCustom = base.custom ?? {};
+  if (Object.keys(baseCustom).length > 0 || overrides.extend !== undefined) {
+    merged.custom = { ...baseCustom };
+    if (overrides.extend) {
+      for (const [name, override] of Object.entries(overrides.extend)) {
+        merged.custom[name] = mergeSkin(baseCustom[name] ?? base.surface, override);
+      }
+    }
   }
 
   return merged;
