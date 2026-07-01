@@ -9,22 +9,29 @@ export interface CardProps {
   children: React.ReactNode;
   /** Skin name or custom Skin object. Default: 'surface' */
   skin?: SkinProp;
+  size?: 'sm' | 'md' | 'lg';
+  /** Visual depth independent from size. Default: matches `size`. */
+  elevation?: 'none' | 'sm' | 'md' | 'lg';
   style?: ViewStyle;
 }
 
 export function Card({
   children,
   skin: skinProp = 'surface',
+  size = 'md',
+  elevation,
   style,
 }: CardProps) {
   const theme = useTheme();
   const skin = resolveSkin(skinProp, theme);
+  const depth = elevations[elevation ?? size];
 
   return (
     <View
       style={[
         styles.card,
-        shadows.md,
+        depth,
+        sizes[size],
         {
           backgroundColor: skin.bg,
           borderColor: skin.border,
@@ -39,8 +46,28 @@ export function Card({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: radii.lg,
-    padding: spacing.lg,
     borderWidth: 1,
   },
 });
+
+const sizes = StyleSheet.create({
+  sm: {
+    borderRadius: radii.md,
+    padding: spacing.md,
+  },
+  md: {
+    borderRadius: radii.lg,
+    padding: spacing.lg,
+  },
+  lg: {
+    borderRadius: radii.xl,
+    padding: spacing.xl,
+  },
+});
+
+const elevations = {
+  none: {},
+  sm: shadows.sm,
+  md: shadows.md,
+  lg: shadows.lg,
+} as const;

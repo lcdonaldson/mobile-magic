@@ -122,11 +122,17 @@ import { Card, Type } from 'mobile-magic';
 <Card skin="primary">
   <Type skin="primary">White text on primary background</Type>
 </Card>
+
+<Card size="sm" elevation="lg">
+  <Type scale="label">Compact but lifted</Type>
+</Card>
 ```
 
 | Prop | Type | Default |
 |------|------|---------|
 | `skin` | `SkinProp` | `'surface'` |
+| `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` |
+| `elevation` | `'none'` \| `'sm'` \| `'md'` \| `'lg'` | matches `size` |
 | `style` | `ViewStyle` | — |
 
 ### Field
@@ -138,6 +144,7 @@ import { Field } from 'mobile-magic';
 
 <Field label="Email" placeholder="you@example.com" keyboardType="email-address" />
 <Field label="Password" secureTextEntry error="Must be 8+ characters" />
+<Field label="Search" size="lg" placeholder="Larger input text" />
 ```
 
 | Prop | Type | Default |
@@ -145,6 +152,7 @@ import { Field } from 'mobile-magic';
 | `label` | `string` | — |
 | `hint` | `string` | — |
 | `error` | `string` | — |
+| `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` |
 | `style` | `ViewStyle` | — |
 
 Extends all `TextInputProps` (placeholder, secureTextEntry, keyboardType, etc).

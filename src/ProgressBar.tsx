@@ -9,6 +9,7 @@ import { useReduceMotion } from './hooks/useReduceMotion';
 export interface ProgressBarProps {
   /** Progress from 0 to 1 */
   value: number;
+  size?: 'sm' | 'md' | 'lg';
   skin?: SkinProp;
   style?: ViewStyle;
 }
@@ -28,6 +29,7 @@ function clampProgress(value: number): number {
 
 export function ProgressBar({
   value,
+  size = 'md',
   skin: skinProp = 'primary',
   style,
 }: ProgressBarProps) {
@@ -56,6 +58,7 @@ export function ProgressBar({
       accessibilityValue={{ min: 0, max: 100, now: Math.round(progress * 100) }}
       style={[
         styles.track,
+        sizeStyles[size],
         {
           // Use neutral track color for stronger visual separation from fill.
           backgroundColor: theme.border,
@@ -79,7 +82,6 @@ export function ProgressBar({
 
 const styles = StyleSheet.create({
   track: {
-    height: spacing.sm,
     borderRadius: radii.full,
     borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
@@ -89,4 +91,10 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: radii.full,
   },
+});
+
+const sizeStyles = StyleSheet.create({
+  sm: { height: spacing.xs + spacing.xs / 2 },
+  md: { height: spacing.sm },
+  lg: { height: spacing.md - spacing.xs },
 });

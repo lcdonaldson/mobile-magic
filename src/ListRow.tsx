@@ -10,6 +10,7 @@ export interface ListRowProps {
   sublabel?: string;
   leading?: React.ReactNode;
   trailing?: React.ReactNode;
+  density?: 'compact' | 'default' | 'comfortable';
   skin?: SkinProp;
   disabled?: boolean;
   style?: ViewStyle;
@@ -21,6 +22,7 @@ export function ListRow({
   sublabel,
   leading,
   trailing,
+  density = 'default',
   skin: skinProp = 'surface',
   disabled = false,
   style,
@@ -39,6 +41,7 @@ export function ListRow({
       android_ripple={{ color: skin.pressed, borderless: false }}
       style={({ pressed }) => [
         styles.row,
+        densities[density],
         {
           backgroundColor: Platform.OS === 'ios' && pressed && interactive ? skin.pressed : skin.bg,
           borderColor: skin.border,
@@ -70,11 +73,8 @@ const styles = StyleSheet.create({
     minHeight: MIN_TOUCH,
     borderWidth: 1,
     borderRadius: radii.lg,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
   },
   leading: {
     alignItems: 'center',
@@ -93,5 +93,23 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
+  },
+});
+
+const densities = StyleSheet.create({
+  compact: {
+    paddingHorizontal: spacing.sm + spacing.xs / 2,
+    paddingVertical: spacing.xs + spacing.xs / 2,
+    gap: spacing.sm,
+  },
+  default: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    gap: spacing.md,
+  },
+  comfortable: {
+    paddingHorizontal: spacing.lg - spacing.xs,
+    paddingVertical: spacing.md - spacing.xs,
+    gap: spacing.md,
   },
 });

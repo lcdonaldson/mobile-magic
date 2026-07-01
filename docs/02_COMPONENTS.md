@@ -44,6 +44,14 @@ export function Root() {
   <Type scale="h3">Card title</Type>
   <Type muted>Card content</Type>
 </Card>
+
+<Card size="sm" elevation="lg">
+  <Type scale="label">Compact and elevated</Type>
+</Card>
+
+<Card size="lg" elevation="none">
+  <Type scale="h3">Large and flat</Type>
+</Card>
 ```
 
 ### `Button`
@@ -62,6 +70,8 @@ export function Root() {
 ```tsx
 <Field label="Email" placeholder="you@example.com" />
 <Field label="Password" secureTextEntry />
+<Field label="Search" size="sm" placeholder="Compact input" />
+<Field label="Display Name" size="lg" placeholder="Larger body-sized input text" />
 <Field label="Username" hint="3-20 characters" />
 <Field label="Password" error="Must be at least 8 characters" />
 ```
