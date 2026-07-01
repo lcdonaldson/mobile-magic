@@ -151,17 +151,17 @@ import { Button } from 'mobile-magic';
 | `style` | `ViewStyle` | — |
 | `onPress` | `() => void` | — |
 
-### Type
+### Typography
 
 Theme-aware text with scale presets. Reads the active theme color automatically.
 
 ```tsx
-import { Type } from 'mobile-magic';
+import { Typography } from 'mobile-magic';
 
-<Type scale="h1">Big Heading</Type>
-<Type scale="body">Paragraph text</Type>
-<Type scale="caption" muted>Helper text</Type>
-<Type skin="primary">Text on a primary surface</Type>
+<Typography scale="h1">Big Heading</Typography>
+<Typography scale="body">Paragraph text</Typography>
+<Typography scale="caption" muted>Helper text</Typography>
+<Typography skin="primary">Text on a primary surface</Typography>
 ```
 
 | Prop | Type | Default |
@@ -177,19 +177,19 @@ Extends all `TextProps`.
 A skinned container with border and shadow.
 
 ```tsx
-import { Card, Type } from 'mobile-magic';
+import { Card, Typography } from 'mobile-magic';
 
 <Card>
-  <Type scale="h3">Title</Type>
-  <Type muted>Description goes here</Type>
+  <Typography scale="h3">Title</Typography>
+  <Typography muted>Description goes here</Typography>
 </Card>
 
 <Card skin="primary">
-  <Type skin="primary">White text on primary background</Type>
+  <Typography skin="primary">White text on primary background</Typography>
 </Card>
 
 <Card size="sm" elevation="lg">
-  <Type scale="label">Compact but lifted</Type>
+  <Typography scale="label">Compact but lifted</Typography>
 </Card>
 ```
 
@@ -306,7 +306,7 @@ import { Checkbox } from 'mobile-magic';
 Controlled-only radio button for grouped selection.
 
 ```tsx
-import { RadioButton, Type } from 'mobile-magic';
+import { RadioButton, Typography } from 'mobile-magic';
 
 const [plan, setPlan] = useState<'starter' | 'pro'>('starter');
 
@@ -370,10 +370,10 @@ import { ProgressBar } from 'mobile-magic';
 Layout wrapper for spacing between direct children without repeating inline margin wrappers.
 
 ```tsx
-import { StackView, Type, Button, ProgressBar } from 'mobile-magic';
+import { StackView, Typography, Button, ProgressBar } from 'mobile-magic';
 
 <StackView gap="md">
-  <Type muted>Status</Type>
+  <Typography muted>Status</Typography>
   <Button>Continue</Button>
   <ProgressBar value={0.5} />
 </StackView>
@@ -403,7 +403,7 @@ const brandOrange: Skin = {
 
 <Button skin={brandOrange}>Custom</Button>
 <Card skin={brandOrange}>
-  <Type skin={brandOrange}>On orange</Type>
+  <Typography skin={brandOrange}>On orange</Typography>
 </Card>
 ```
 
@@ -555,7 +555,7 @@ mobile-magic v0.1 is an architecture, not a finished product. These are the ques
 
 **Does the Skin contract hold?** 4 properties (`bg`, `fg`, `border`, `pressed`) covers most components. But does it break for toggles, gradients, multi-state surfaces? If it needs a 5th property, what is it — and can we resist adding a 6th?
 
-**What components are missing?** Button, Type, Card, Field, Badge, Switch, ListRow, Checkbox, RadioButton, Avatar, ProgressBar, and StackView cover core app primitives today. Real apps will still reveal gaps: screen wrappers, modal patterns, and stateful composites. Each new component must *earn* its place — if it can be built in <5 lines with `View` + `useTheme()` + tokens, it doesn't belong here.
+**What components are missing?** Button, Typography, Card, Field, Badge, Switch, ListRow, Checkbox, RadioButton, Avatar, ProgressBar, and StackView cover core app primitives today. Real apps will still reveal gaps: screen wrappers, modal patterns, and stateful composites. Each new component must *earn* its place — if it can be built in <5 lines with `View` + `useTheme()` + tokens, it doesn't belong here.
 
 **Does it feel native?** Motion is now in live use (`Switch` and `ProgressBar` both consume `motion` tokens and respect reduced motion). The next step is not "add animation for animation's sake," but to add reusable animation primitives only when repeated product patterns justify them.
 

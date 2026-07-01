@@ -18,13 +18,13 @@ export function Root() {
 
 ## Display
 
-### `Type`
+### `Typography`
 
 ```tsx
-<Type scale="h1">Heading</Type>
-<Type scale="body">Body text</Type>
-<Type scale="caption" muted>Secondary text</Type>
-<Type skin="primary">Text on primary surface</Type>
+<Typography scale="h1">Heading</Typography>
+<Typography scale="body">Body text</Typography>
+<Typography scale="caption" muted>Secondary text</Typography>
+<Typography skin="primary">Text on primary surface</Typography>
 ```
 
 ### `Badge`
@@ -41,16 +41,16 @@ export function Root() {
 
 ```tsx
 <Card>
-  <Type scale="h3">Card title</Type>
-  <Type muted>Card content</Type>
+  <Typography scale="h3">Card title</Typography>
+  <Typography muted>Card content</Typography>
 </Card>
 
 <Card size="sm" elevation="lg">
-  <Type scale="label">Compact and elevated</Type>
+  <Typography scale="label">Compact and elevated</Typography>
 </Card>
 
 <Card size="lg" elevation="none">
-  <Type scale="h3">Large and flat</Type>
+  <Typography scale="h3">Large and flat</Typography>
 </Card>
 ```
 

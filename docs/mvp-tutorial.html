@@ -167,7 +167,7 @@ import {
   ListRow,
   ProgressBar,
   Switch,
-  Type,
+  Typography,
   spacing,
   useTheme,
   shadows,
@@ -192,22 +192,22 @@ function DemoScreen() {
       &lt;View style={styles.header}&gt;
         &lt;Avatar name={name} size="lg" skin="info" /&gt;
         &lt;View style={{ flex: 1, gap: spacing.xs }}&gt;
-          &lt;Type scale="h2"&gt;Profile Setup&lt;/Type&gt;
-          &lt;Type muted&gt;Build a complete styled screen with Mobile Magic&lt;/Type&gt;
+          &lt;Typography scale="h2"&gt;Profile Setup&lt;/Typography&gt;
+          &lt;Typography muted&gt;Build a complete styled screen with Mobile Magic&lt;/Typography&gt;
         &lt;/View&gt;
         &lt;Badge skin="success"&gt;MVP&lt;/Badge&gt;
       &lt;/View&gt;
 
       {/* Progress */}
       &lt;Card skin="surface" style={styles.card}&gt;
-        &lt;Type scale="label" muted&gt;Completion&lt;/Type&gt;
-        &lt;Type scale="h3"&gt;{Math.round(progress * 100)}%&lt;/Type&gt;
+        &lt;Typography scale="label" muted&gt;Completion&lt;/Typography&gt;
+        &lt;Typography scale="h3"&gt;{Math.round(progress * 100)}%&lt;/Typography&gt;
         &lt;ProgressBar value={progress} skin="primary" style={{ marginTop: spacing.sm }} /&gt;
       &lt;/Card&gt;
 
       {/* Form */}
       &lt;Card style={styles.card}&gt;
-        &lt;Type scale="h3"&gt;Account Details&lt;/Type&gt;
+        &lt;Typography scale="h3"&gt;Account Details&lt;/Typography&gt;
         &lt;View style={styles.stack}&gt;
           &lt;Field
             label="Full Name"

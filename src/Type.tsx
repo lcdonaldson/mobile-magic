@@ -1,36 +1,9 @@
-import React from 'react';
-import { Text } from 'react-native';
-import type { TextProps } from 'react-native';
-import { typography as scales } from './tokens';
-import type { TypographyScale } from './tokens';
-import { useTheme, resolveSkin } from './provider';
-import type { SkinProp } from './skins';
+import { Typography } from './Typography';
+import type { TypographyProps } from './Typography';
 
-export interface TypeProps extends TextProps {
-  /** Type scale preset. Default: 'body' */
-  scale?: TypographyScale;
-  /** Use muted (secondary) text color. */
-  muted?: boolean;
-  /** Inherit fg color from a skin (for text on colored surfaces). */
-  skin?: SkinProp;
-}
-
-export function Type({
-  scale = 'body',
-  muted = false,
-  skin,
-  style,
-  ...props
-}: TypeProps) {
-  const theme = useTheme();
-
-  const color = skin
-    ? resolveSkin(skin, theme).fg
-    : muted
-      ? theme.textMuted
-      : theme.text;
-
-  return (
-    <Text style={[scales[scale], { color, fontFamily: theme.fontFamily }, style]} {...props} />
-  );
-}
+/**
+ * Backward-compatible alias for `Typography`.
+ * Prefer importing `Typography` directly in new code.
+ */
+export type TypeProps = TypographyProps;
+export const Type = Typography;
