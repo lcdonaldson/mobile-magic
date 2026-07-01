@@ -1,6 +1,6 @@
 # mobile-magic
 
-A skin-and-token system for React Native. Dark mode, swappable color palettes, and eleven components that cover core app primitives. Everything else, you build with native `View`, `Text`, `Pressable` — using our tokens and theme.
+A skin-and-token system for React Native. Dark mode, swappable color palettes, and twelve components that cover core app primitives. Everything else, you build with native `View`, `Text`, `Pressable` — using our tokens and theme.
 
 ## Pre-1.0 Notice
 
@@ -292,6 +292,26 @@ import { ProgressBar } from 'mobile-magic';
 | `skin` | `SkinProp` | `'primary'` |
 | `style` | `ViewStyle` | — |
 
+### StackView
+
+Layout wrapper for spacing between direct children without repeating inline margin wrappers.
+
+```tsx
+import { StackView, Type, Button, ProgressBar } from 'mobile-magic';
+
+<StackView gap="md">
+  <Type muted>Status</Type>
+  <Button>Continue</Button>
+  <ProgressBar value={0.5} />
+</StackView>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `gap` | `'xs'` \| `'sm'` \| `'md'` \| `'lg'` \| `'xl'` \| `number` | `'md'` |
+| `direction` | `'vertical'` \| `'horizontal'` | `'vertical'` |
+| `style` | `ViewStyle` | — |
+
 ---
 
 ## Skins
@@ -459,7 +479,7 @@ mobile-magic v0.1 is an architecture, not a finished product. These are the ques
 
 **Does the Skin contract hold?** 4 properties (`bg`, `fg`, `border`, `pressed`) covers most components. But does it break for toggles, gradients, multi-state surfaces? If it needs a 5th property, what is it — and can we resist adding a 6th?
 
-**What components are missing?** Button, Type, Card, Field, Badge, Switch, ListRow, Checkbox, RadioButton, Avatar, and ProgressBar cover core app primitives today. Real apps will still reveal gaps: screen wrappers, modal patterns, and stateful composites. Each new component must *earn* its place — if it can be built in <5 lines with `View` + `useTheme()` + tokens, it doesn't belong here.
+**What components are missing?** Button, Type, Card, Field, Badge, Switch, ListRow, Checkbox, RadioButton, Avatar, ProgressBar, and StackView cover core app primitives today. Real apps will still reveal gaps: screen wrappers, modal patterns, and stateful composites. Each new component must *earn* its place — if it can be built in <5 lines with `View` + `useTheme()` + tokens, it doesn't belong here.
 
 **Does it feel native?** Motion is now in live use (`Switch` and `ProgressBar` both consume `motion` tokens and respect reduced motion). The next step is not "add animation for animation's sake," but to add reusable animation primitives only when repeated product patterns justify them.
 

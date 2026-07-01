@@ -21,6 +21,7 @@ export { Checkbox } from './Checkbox';
 export { RadioButton } from './RadioButton';
 export { Avatar } from './Avatar';
 export { ProgressBar } from './ProgressBar';
+export { StackView } from './StackView';
 
 // Hooks
 export { useReduceMotion } from './hooks/useReduceMotion';

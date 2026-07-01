@@ -60,6 +60,15 @@ export function Switch({
     onValueChange?.(next);
   }
 
+  function handleNativeSwitchChange(next: boolean) {
+    // Some runtimes fire both onChange and onValueChange (sometimes with
+    // intermediate values). Ignore no-op updates to prevent visual bounce.
+    if (next === value) {
+      return;
+    }
+    setValue(next);
+  }
+
   if (Platform.OS === 'ios') {
     return (
       <View style={[styles.hitArea, disabled && styles.disabled, style]}>
@@ -68,8 +77,8 @@ export function Switch({
           accessibilityState={{ disabled, checked: value }}
           disabled={disabled}
           value={value}
-          onValueChange={setValue}
-          onChange={(event) => setValue(event.nativeEvent.value)}
+          onValueChange={handleNativeSwitchChange}
+          onChange={(event) => handleNativeSwitchChange(event.nativeEvent.value)}
           trackColor={{ false: theme.border, true: skin.bg }}
           thumbColor={value ? skin.fg : theme.bg}
           ios_backgroundColor={theme.border}

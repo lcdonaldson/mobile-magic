@@ -57,8 +57,9 @@ export function ProgressBar({
       style={[
         styles.track,
         {
-          backgroundColor: skin.pressed,
-          borderColor: skin.border,
+          // Use neutral track color for stronger visual separation from fill.
+          backgroundColor: theme.border,
+          borderColor: theme.border,
         },
         style,
       ]}
