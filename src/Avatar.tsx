@@ -8,7 +8,7 @@ import type { SkinProp } from './skins';
 export interface AvatarProps {
   name?: string;
   source?: ImageSourcePropType;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   skin?: SkinProp;
   style?: ViewStyle;
 }
@@ -91,10 +91,12 @@ const sizeStyles = StyleSheet.create({
   sm: { width: spacing.lg, height: spacing.lg },
   md: { width: spacing.xl + spacing.xs, height: spacing.xl + spacing.xs },
   lg: { width: spacing.xl + spacing.md, height: spacing.xl + spacing.md },
+  xl: { width: spacing.xl + spacing.lg, height: spacing.xl + spacing.lg },
 });
 
 const labelStyles = StyleSheet.create({
   sm: { ...scales.caption, fontWeight: '600' },
   md: { ...scales.label, fontWeight: '600' },
   lg: { ...scales.body, fontWeight: '600' },
+  xl: { ...scales.h3, fontWeight: '600' },
 });

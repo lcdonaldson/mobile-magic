@@ -19,6 +19,7 @@ export interface Theme {
   textMuted: string;
   border: string;
   fontFamily?: string;
+  custom?: Record<string, Skin>;
   primary: Skin;
   secondary: Skin;
   danger: Skin;
@@ -33,7 +34,7 @@ export interface Theme {
 export type SkinName = 'primary' | 'secondary' | 'danger' | 'ghost' | 'surface' | 'success' | 'warning' | 'info';
 
 // What components accept: a name (resolved from theme) or a raw Skin object
-export type SkinProp = SkinName | Skin;
+export type SkinProp = string | Skin;
 
 // =============================================================================
 // Light Theme

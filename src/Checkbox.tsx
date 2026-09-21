@@ -13,6 +13,7 @@ export interface CheckboxProps {
   defaultChecked?: boolean;
   /** Visual mixed state */
   indeterminate?: boolean;
+  size?: 'sm' | 'md' | 'lg';
   skin?: SkinProp;
   disabled?: boolean;
   style?: ViewStyle;
@@ -24,6 +25,7 @@ export function Checkbox({
   checked: checkedProp,
   defaultChecked = false,
   indeterminate = false,
+  size = 'md',
   skin: skinProp = 'primary',
   disabled = false,
   style,
@@ -64,6 +66,7 @@ export function Checkbox({
       android_ripple={{ color: skin.pressed, borderless: false }}
       style={[
         styles.root,
+        rootSizes[size],
         disabled && styles.disabled,
         style,
       ]}
@@ -71,6 +74,7 @@ export function Checkbox({
       <View
         style={[
           styles.box,
+          boxSizes[size],
           {
             backgroundColor: selected ? skin.bg : theme.bg,
             borderColor: selected ? skin.border : theme.border,
@@ -78,10 +82,10 @@ export function Checkbox({
         ]}
       >
         {checked && !indeterminate ? (
-          <View style={[styles.check, { borderColor: skin.fg }]} />
+          <View style={[checkSizes[size], { borderColor: skin.fg }]} />
         ) : null}
         {indeterminate ? (
-          <View style={[styles.mixed, { backgroundColor: skin.fg }]} />
+          <View style={[mixedSizes[size], { backgroundColor: skin.fg }]} />
         ) : null}
       </View>
       {label}
@@ -100,14 +104,61 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
   },
   box: {
-    width: spacing.lg,
-    height: spacing.lg,
-    borderRadius: radii.sm,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  check: {
+  label: {
+    flexShrink: 1,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+});
+
+const rootSizes = StyleSheet.create({
+  sm: {
+    minHeight: MIN_TOUCH,
+    gap: spacing.xs + spacing.xs / 2,
+  },
+  md: {
+    minHeight: MIN_TOUCH,
+    gap: spacing.sm,
+  },
+  lg: {
+    minHeight: MIN_TOUCH,
+    gap: spacing.md - spacing.xs / 2,
+  },
+});
+
+const boxSizes = StyleSheet.create({
+  sm: {
+    width: spacing.md + spacing.xs / 2,
+    height: spacing.md + spacing.xs / 2,
+    borderRadius: radii.sm,
+  },
+  md: {
+    width: spacing.lg,
+    height: spacing.lg,
+    borderRadius: radii.sm,
+  },
+  lg: {
+    width: spacing.lg + spacing.xs,
+    height: spacing.lg + spacing.xs,
+    borderRadius: radii.md,
+  },
+});
+
+const checkSizes = StyleSheet.create({
+  sm: {
+    width: spacing.xs + spacing.xs / 4,
+    height: spacing.sm,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    transform: [{ rotate: '45deg' }],
+    marginTop: -1,
+  },
+  md: {
     width: spacing.xs + spacing.xs / 2,
     height: spacing.sm + spacing.xs / 2,
     borderRightWidth: 2,
@@ -115,15 +166,30 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '45deg' }],
     marginTop: -1,
   },
-  mixed: {
+  lg: {
+    width: spacing.sm + spacing.xs / 2,
+    height: spacing.md,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    transform: [{ rotate: '45deg' }],
+    marginTop: -1,
+  },
+});
+
+const mixedSizes = StyleSheet.create({
+  sm: {
+    width: spacing.sm + spacing.xs / 2,
+    height: spacing.xs / 2,
+    borderRadius: radii.full,
+  },
+  md: {
     width: spacing.md,
     height: spacing.xs / 2,
     borderRadius: radii.full,
   },
-  label: {
-    flexShrink: 1,
-  },
-  disabled: {
-    opacity: 0.5,
+  lg: {
+    width: spacing.md + spacing.xs,
+    height: spacing.xs / 2 + 1,
+    borderRadius: radii.full,
   },
 });

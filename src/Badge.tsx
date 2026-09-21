@@ -9,19 +9,32 @@ export interface BadgeProps {
   children: React.ReactNode;
   /** Skin name or custom Skin object. Default: 'secondary' */
   skin?: SkinProp;
+  size?: 'sm' | 'md' | 'lg';
   style?: ViewStyle;
 }
 
-export function Badge({ children, skin: skinProp = 'secondary', style }: BadgeProps) {
+export function Badge({
+  children,
+  skin: skinProp = 'secondary',
+  size = 'md',
+  style,
+}: BadgeProps) {
   const theme = useTheme();
   const skin = resolveSkin(skinProp, theme);
 
   const label = typeof children === 'string' ? (
-    <Text style={[styles.label, { color: skin.fg }]}>{children}</Text>
+    <Text style={[styles.label, labelSizes[size], { color: skin.fg }]}>{children}</Text>
   ) : children;
 
   return (
-    <View style={[styles.badge, { backgroundColor: skin.bg, borderColor: skin.border }, style]}>
+    <View
+      style={[
+        styles.badge,
+        containerSizes[size],
+        { backgroundColor: skin.bg, borderColor: skin.border },
+        style,
+      ]}
+    >
       {label}
     </View>
   );
@@ -36,7 +49,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   label: {
-    fontSize: scales.caption.fontSize,
     fontWeight: '600',
   },
+});
+
+const containerSizes = StyleSheet.create({
+  sm: {
+    paddingVertical: spacing.xs / 3,
+    paddingHorizontal: spacing.xs + spacing.xs / 2,
+  },
+  md: {
+    paddingVertical: spacing.xs / 2,
+    paddingHorizontal: spacing.sm,
+  },
+  lg: {
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.md - spacing.xs / 2,
+  },
+});
+
+const labelSizes = StyleSheet.create({
+  sm: { fontSize: scales.caption.fontSize },
+  md: { fontSize: scales.caption.fontSize + 1 },
+  lg: { fontSize: scales.label.fontSize },
 });

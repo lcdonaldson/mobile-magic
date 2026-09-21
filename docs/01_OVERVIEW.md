@@ -19,7 +19,7 @@ import {
   MagicProvider,
   useTheme,
   Button,
-  Type,
+  Typography,
   spacing,
 } from 'mobile-magic';
 ```
@@ -38,7 +38,7 @@ function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.bg, padding: spacing.md }}>
-      <Type scale="h2">Welcome</Type>
+      <Typography scale="h2">Welcome</Typography>
       <Button skin="primary">Continue</Button>
     </View>
   );

@@ -11,21 +11,38 @@ export interface SwitchProps {
   value?: boolean;
   /** Uncontrolled initial value */
   defaultValue?: boolean;
+  size?: 'sm' | 'md' | 'lg';
   skin?: SkinProp;
   disabled?: boolean;
   style?: ViewStyle;
   onValueChange?: (next: boolean) => void;
 }
 
-const TRACK_WIDTH = spacing.xl + spacing.lg;
-const TRACK_HEIGHT = spacing.lg;
-const TRACK_PADDING = spacing.xs / 2;
-const THUMB_SIZE = spacing.md;
-const THUMB_TRANSLATE_X = TRACK_WIDTH - THUMB_SIZE - TRACK_PADDING * 2;
+const SWITCH_METRICS = {
+  sm: {
+    trackWidth: spacing.xl + spacing.md,
+    trackHeight: spacing.md + spacing.xs,
+    trackPadding: spacing.xs / 2,
+    thumbSize: spacing.md - spacing.xs / 2,
+  },
+  md: {
+    trackWidth: spacing.xl + spacing.lg,
+    trackHeight: spacing.lg,
+    trackPadding: spacing.xs / 2,
+    thumbSize: spacing.md,
+  },
+  lg: {
+    trackWidth: spacing.xl + spacing.lg + spacing.xs,
+    trackHeight: spacing.lg + spacing.xs,
+    trackPadding: spacing.xs / 2,
+    thumbSize: spacing.md + spacing.xs / 2,
+  },
+} as const;
 
 export function Switch({
   value: valueProp,
   defaultValue = false,
+  size = 'md',
   skin: skinProp = 'primary',
   disabled = false,
   style,
@@ -34,11 +51,13 @@ export function Switch({
   const theme = useTheme();
   const skin = resolveSkin(skinProp, theme);
   const reduceMotion = useReduceMotion();
+  const metrics = SWITCH_METRICS[size];
+  const thumbTranslateX = metrics.trackWidth - metrics.thumbSize - metrics.trackPadding * 2;
 
   const isControlled = valueProp !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue);
   const value = isControlled ? valueProp : internalValue;
-  const thumbTranslate = useRef(new Animated.Value(value ? THUMB_TRANSLATE_X : 0)).current;
+  const thumbTranslate = useRef(new Animated.Value(value ? thumbTranslateX : 0)).current;
 
   useEffect(() => {
     // We render the custom switch on Android + web.
@@ -47,11 +66,11 @@ export function Switch({
     }
 
     Animated.timing(thumbTranslate, {
-      toValue: value ? THUMB_TRANSLATE_X : 0,
+      toValue: value ? thumbTranslateX : 0,
       duration: reduceMotion ? 0 : motion.fast,
       useNativeDriver: true,
     }).start();
-  }, [thumbTranslate, value, reduceMotion]);
+  }, [thumbTranslate, value, reduceMotion, thumbTranslateX]);
 
   function setValue(next: boolean) {
     if (!isControlled) {
@@ -97,7 +116,12 @@ export function Switch({
     >
       <View
         style={[
-          styles.track,
+          styles.trackBase,
+          {
+            width: metrics.trackWidth,
+            height: metrics.trackHeight,
+            padding: metrics.trackPadding,
+          },
           {
             backgroundColor: value ? skin.bg : theme.border,
             borderColor: value ? skin.border : theme.border,
@@ -106,8 +130,10 @@ export function Switch({
       >
         <Animated.View
           style={[
-            styles.thumb,
+            styles.thumbBase,
             {
+              width: metrics.thumbSize,
+              height: metrics.thumbSize,
               backgroundColor: value ? skin.fg : theme.bg,
               transform: [{ translateX: thumbTranslate }],
             },
@@ -125,17 +151,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-start',
   },
-  track: {
-    width: TRACK_WIDTH,
-    height: TRACK_HEIGHT,
+  trackBase: {
     borderRadius: radii.full,
     borderWidth: 1,
-    padding: TRACK_PADDING,
     justifyContent: 'center',
   },
-  thumb: {
-    width: THUMB_SIZE,
-    height: THUMB_SIZE,
+  thumbBase: {
     borderRadius: radii.full,
   },
   disabled: {

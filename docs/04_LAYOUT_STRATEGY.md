@@ -11,16 +11,16 @@ That means you should combine exported tokens with native layout primitives:
 
 ```tsx
 import { View } from 'react-native';
-import { Card, Type, spacing } from 'mobile-magic';
+import { Card, Typography, spacing } from 'mobile-magic';
 
 function Example() {
   return (
     <View style={{ flex: 1, padding: spacing.md, gap: spacing.md }}>
       <Card>
-        <Type scale="h3">Section A</Type>
+        <Typography scale="h3">Section A</Typography>
       </Card>
       <Card>
-        <Type scale="h3">Section B</Type>
+        <Typography scale="h3">Section B</Typography>
       </Card>
     </View>
   );
