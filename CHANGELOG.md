@@ -33,3 +33,17 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ### Changed
 - Added a publish reminder in README to run final npm publish manually in the owner terminal (biometric/2FA flow).
+
+## [0.0.3] - 2026-09-21
+
+### Added
+- `createTheme(base, overrides)` for brand theme customization with deep partial merges and auto-derived `pressed` when `bg` changes.
+- `ThemeOverrides` export, including `extend` for custom named skins (e.g. `brand`, `cta`) resolved at runtime via `theme.custom`.
+- `Card` `elevation` prop (`'none' | 'sm' | 'md' | 'lg'`) independent from `size`.
+- `Typography` component as the primary text API; `Type` kept as a backward-compatible alias.
+- Size / structural prop refinements across several components (including `Field` size typography).
+
+### Changed
+- `SkinProp` widened to `string | Skin` so custom skin names work like built-ins.
+- `resolveSkin` falls back to `surface` for unknown skin names instead of crashing.
+- README and docs updated for `createTheme`, custom skins, Card elevation, and `Typography`.
